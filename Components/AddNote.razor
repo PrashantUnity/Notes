@@ -1,5 +1,54 @@
-<h3>AddNote</h3>
+@using Notes.Models 
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
+<div id="add-note-modal" class="modal">
+    <div class="modal-content">
+        <a @onclick="CloseButtonClicked" class="close-button">&times;</a>
+        <h2>Add a New Note</h2> 
+        <input type="text"  placeholder="Title" @bind-value="@_parentNotes.Name" required /> 
+        
+        <hr/>
+        <h3>Child Notes</h3>
 
-@code {
-    
-}
+        <div class="child-notes-container">
+            @foreach (var childNote in _childNotes)
+            {
+                <div class="child-note">
+                    <input type="text" placeholder="Title" @bind="@childNote.Name" readonly />
+                    <textarea placeholder="Your note..." @bind="@childNote.Text" readonly></textarea>
+                </div>
+            }
+        </div>
+        <hr/> 
+        <input type="text" @bind="_childNote.Name" />
+        <textarea placeholder="Your note..." @bind="_childNote.Text" ></textarea>
+        <select @bind="_childNote.NoteTypes" >
+            <option value="@NoteType.Code"> @Enum.GetName(NoteType.Code) </option>
+            <option value="@NoteType.Text"> @Enum.GetName(NoteType.Text) </option>
+            <option value="@NoteType.MarkDown"> @Enum.GetName(NoteType.MarkDown) </option>
+        </select>
+        @switch (_childNote.NoteTypes)
+        {
+            case NoteType.MarkDown:
+                _childNote.ProgrammingLanguage = ProgrammingLanguages.Md;
+                break;
+            case NoteType.Code:
+            {
+                <select @bind="_childNote.ProgrammingLanguage">
+                    @foreach (var language in ProgrammingLanguages.Languages)
+                    {
+                        <option value="@language"> @language </option>
+                    }
+                </select>
+                _childNote.ProgrammingLanguage = ProgrammingLanguages.Cs;
+                break;
+            }
+            case NoteType.Text:
+            default:
+                _childNote.ProgrammingLanguage = ProgrammingLanguages.Text;
+                break;
+        }
+        <button @onclick="AddChildNote">Add Child Note</button> 
+        <button @onclick="SummitButtonClicked">Add Note</button> 
+    </div>
+</div>

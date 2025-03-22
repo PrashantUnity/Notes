@@ -1,11 +1,17 @@
 ﻿@page "/"
-
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-<div class="alert alert-warning" role="alert">
-    Before authentication will function correctly, you must configure your provider details in <code>Program.cs</code>
-</div>
-
-Welcome to your new app.
+@using System.Security.Claims
+@using Notes.Models
+@using Notes.Services
+@using Notes.Utilities
+<AuthorizeView>
+    <Authorized>
+        <AllCards/>
+    </Authorized>
+    <NotAuthorized>
+        <a href="authentication/login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView> 
+@code
+{
+    
+}

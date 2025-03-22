@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Notes.Models;
 
-public class ContactForm
+public class DataForm
 {
     [Required]
     public string Name { get; set; }

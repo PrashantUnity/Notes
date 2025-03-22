@@ -1,5 +1,21 @@
-<h3>AllCards</h3>
+@using System.Text.Json
+@using Notes.Models
+@using Notes.Utilities
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
 
-@code {
-    
+<a @onclick="NewNote" class="add-note-button" title="Add New Note">
+    +
+</a>
+<div class="notes-container">
+    @foreach (var cards in Helper.ParentsNodes)
+    {
+        <Card TakeActionOnMe="ActionOnCard" ParentNote="cards"/>
+    }
+</div>
+
+@if (_isNewNoteAdding)
+{
+    <AddNote OnAddNote="AddedNewNote"/>
 }
+ 

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Components;
+
 namespace Notes.Pages;
 
-public class Authentication_razor
+public partial class Authentication
 {
-    
+    [Parameter] public string? Action { get; set; }
 }

@@ -1,17 +1,21 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inject IJSRuntime JsRuntime
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-    <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<!-- Navbar with Login and Profile --> 
+<MudAppBar Color="Color.Primary" Fixed="false">
+    <MudAvatar Color="Color.Warning" Variant="Variant.Filled">
+        <MudIcon Color="Color.Dark" Icon="@Icons.Custom.Uncategorized.Radioactive" Size="Size.Large" />
+    </MudAvatar>
+    <MudSpacer />
+    <LoginDisplay/>
+</MudAppBar>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+<!-- Floating Add Note Button -->  
+<div class="container">
+    @Body
 </div>
+ 

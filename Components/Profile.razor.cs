@@ -1,6 +1,13 @@
+using Microsoft.AspNetCore.Components;
+
 namespace Notes.Components;
 
-public class Profile_razor
+public partial class Profile 
 {
+    [Parameter] public EventCallback HideProfile { get; set; }
     
+    private async Task CloseButtonClicked()
+    {
+        await HideProfile.InvokeAsync();
+    }
 }

@@ -1,6 +1,6 @@
 namespace Notes.Models;
 
-public class Contact
+public class DataNode
 {
     public string Id { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;

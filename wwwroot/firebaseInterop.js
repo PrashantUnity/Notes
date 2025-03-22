@@ -6,9 +6,9 @@ function initializeFirebase(config) {
     return true;
 }
 
-async function saveContact(formData) {
+async function saveContact(email,formData) {
     try {
-        await db.collection('contacts').add({
+        await db.collection(email).add({
             ...formData,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -19,9 +19,9 @@ async function saveContact(formData) {
 }
 
 // In firebaseInterop.js
-async function getContacts() {
+async function getContacts(email) {
     try {
-        const snapshot = await db.collection('contacts')
+        const snapshot = await db.collection(email)
             .orderBy('timestamp', 'desc')
             .get();
 
@@ -43,17 +43,17 @@ async function getContacts() {
     }
 }
 
-async function deleteContact(contactId) {
+async function deleteContact(email,contactId) {
     try {
-        await db.collection('contacts').doc(contactId).delete();
+        await db.collection(email).doc(contactId).delete();
         return { success: true };
     } catch (error) {
         return { success: false, error: error.message };
     }
 }
-async function updateContact(contactId, updatedData) {
+async function updateContact(email,contactId, updatedData) {
     try {
-        await db.collection('contacts').doc(contactId).update(updatedData);
+        await db.collection(email).doc(contactId).update(updatedData);
         return { success: true };
     } catch (error) {
         return { success: false, error: error.message };

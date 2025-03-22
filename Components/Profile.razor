@@ -1,5 +1,16 @@
-<h3>Profile</h3>
-
-@code {
-    
-}
+@using Notes.Utilities
+<!-- Profile Modal -->
+<div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <h2>User Profile</h2>
+        <p>Name: @Helper.User?.Name</p>
+        <p>Email: @Helper.User?.Email</p>
+        <img src="@Helper.User?.Picture" height="30" width="30" alt="Profile Picture" />
+        <p>Role: @Helper.User?.Azp </p>
+        <p>Created At: @Helper.User?.Jti</p>
+        <p>Updated At: @Helper.User?.Sub</p>
+        <p>Deleted At: @Helper.User?.IsEmailVerified</p> 
+        <button @onclick="CloseButtonClicked">Go To home</button>
+    </div>
+</div> 
+ 

@@ -1,5 +1,14 @@
-<h3>EditCard</h3>
-
-@code {
-    
-}
+@using Notes.Models
+<!-- Edit Note Modal -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <a @onclick="CloseButtonClicked" class="close-button">&times;</a>
+        <h2>Edit Note</h2>
+        <form action="#" method="post">
+            <input type="text" placeholder="Title" required />
+            <textarea placeholder="Edit your note here..." required></textarea>
+            <button type="submit" @onclick="SummitButtonClicked">Save Changes</button>
+        </form>
+    </div>
+</div>
+ 

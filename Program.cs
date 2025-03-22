@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using Notes;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -10,9 +11,14 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddOidcAuthentication(options =>
 {
-    // Configure your authentication provider options here.
-    // For more information, see https://aka.ms/blazor-standalone-auth
-    builder.Configuration.Bind("Local", options.ProviderOptions);
+    options.ProviderOptions.Authority = "https://accounts.google.com";
+    options.ProviderOptions.ClientId = "315199970520-h1el19srk4vgtnuu0qmv3avsgqul6ccs.apps.googleusercontent.com";
+    options.ProviderOptions.RedirectUri = "https://localhost:7156/authentication/login-callback";
+    options.ProviderOptions.DefaultScopes.Add("email");
 });
-
+builder.Services.AddAuthorizationCore(options =>
+{
+    options.AddPolicy("AnonymousAccess", policy => policy.RequireAssertion(context => true));
+}); 
+builder.Services.AddMudServices(); 
 await builder.Build().RunAsync();

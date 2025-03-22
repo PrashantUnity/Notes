@@ -1,6 +1,11 @@
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
 namespace Notes.Layout;
 
-public class RedirectToLogin_razor
+public partial class RedirectToLogin 
 {
-    
+    protected override void OnInitialized()
+    {
+        Navigation.NavigateToLogin("authentication/login");
+    }
 }

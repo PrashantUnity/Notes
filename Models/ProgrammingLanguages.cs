@@ -2,7 +2,38 @@ namespace Notes.Models;
 
 public static class ProgrammingLanguages
 {
-    public static string Cs = "cs";
+    public static readonly string[] Languages =
+    [
+        "csharp"
+        ,"cs"
+        ,"js"
+        ,"ts"
+        ,"py"
+        ,"java"
+        ,"cpp"
+        ,"c"
+        ,"go"
+        ,"rb"
+        ,"swift"
+        ,"kt"
+        ,"rs"
+        ,"php"
+        ,"html"
+        ,"css"
+        ,"sql"
+        ,"sh"
+        ,"ps1"
+        ,"bat"
+        ,"vbs"
+        ,"tsx"
+        ,"jsx"
+        ,"cshtml"
+        ,"json"
+        ,"xml"
+        ,"yaml"
+    ];
+
+    public const string Cs = "cs";
     public static string Js = "js";
     public static string Ts = "ts";
     public static string Py = "py";
@@ -28,5 +59,6 @@ public static class ProgrammingLanguages
     public static string Json = "json";
     public static string Xml = "xml";
     public static string Yaml = "yaml";
-    public static string Md = "md";
+    public static readonly string Md = "md";
+    public static readonly string Text = "Text";
 }
