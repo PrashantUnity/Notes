@@ -19,6 +19,6 @@ builder.Services.AddOidcAuthentication(options =>
 builder.Services.AddAuthorizationCore(options =>
 {
     options.AddPolicy("AnonymousAccess", policy => policy.RequireAssertion(context => true));
-}); 
-builder.Services.AddMudServices(); 
+});
+builder.Services.AddMudServices();
 await builder.Build().RunAsync();

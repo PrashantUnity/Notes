@@ -7,7 +7,6 @@ namespace Notes.Components;
 
 public partial class AllCards
 {
-    
     private Task ActionOnCard(TakeAction<ParentNotes>? takeAction)
     {
         if (takeAction == null)
@@ -30,14 +29,15 @@ public partial class AllCards
         {
             MaxWidth = MaxWidth.Small
         };
-        var dialog = await DialogService.ShowAsync<AddNote>("AddNotes", option);  
+        var dialog = await DialogService.ShowAsync<AddNote>("AddNotes", option);
         var result = await dialog.Result;
 
         if (result is { Canceled: false })
-        { 
+        {
             await UpdateData();
         }
     }
+
     protected override async Task OnInitializedAsync()
     {
         if (Helper.ParentsNodes.Count == 0)
@@ -48,9 +48,9 @@ public partial class AllCards
 
     private async Task LoadAllData()
     {
-        if (Helper.User == null) return; 
+        if (Helper.User == null) return;
         try
-        { 
+        {
             var result = await JsRuntime.InvokeAsync<JsonElement>("getContacts", args: [Helper.User.Email]);
             var snippets = new List<ParentNotes>();
 
@@ -75,7 +75,6 @@ public partial class AllCards
         }
         catch (Exception ex)
         {
-            
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add($"Error loading contacts: {ex.Message}", Severity.Error);
         }
@@ -88,7 +87,8 @@ public partial class AllCards
             return;
         }
 
-        var result = await JsRuntime.InvokeAsync<SaveResult>("deleteContact", args: [Helper.User.Email, action.ObjectData.Id]);
+        var result =
+            await JsRuntime.InvokeAsync<SaveResult>("deleteContact", args: [Helper.User.Email, action.ObjectData.Id]);
 
         if (result.Success)
         {
@@ -98,7 +98,6 @@ public partial class AllCards
         }
         else
         {
-            
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add($"Delete failed: {result.Error}", Severity.Error);
         }
@@ -117,18 +116,17 @@ public partial class AllCards
             email = Helper.User.Email,
             description = JsonSerializer.Serialize(action.ObjectData)
         };
-        var result = await JsRuntime.InvokeAsync<SaveResult>("updateContact", args: [Helper.User.Email, action.ObjectData.Id, formData]);
+        var result = await JsRuntime.InvokeAsync<SaveResult>("updateContact",
+            args: [Helper.User.Email, action.ObjectData.Id, formData]);
 
         if (result.Success)
         {
-            
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add("Contact Updated successfully", Severity.Success);
             await UpdateData();
         }
         else
         {
-            
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add($"Delete failed: {result.Error}", Severity.Error);
         }

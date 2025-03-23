@@ -4,33 +4,8 @@ public static class ProgrammingLanguages
 {
     public static readonly string[] Languages =
     [
-        "csharp"
-        ,"cs"
-        ,"js"
-        ,"ts"
-        ,"py"
-        ,"java"
-        ,"cpp"
-        ,"c"
-        ,"go"
-        ,"rb"
-        ,"swift"
-        ,"kt"
-        ,"rs"
-        ,"php"
-        ,"html"
-        ,"css"
-        ,"sql"
-        ,"sh"
-        ,"ps1"
-        ,"bat"
-        ,"vbs"
-        ,"tsx"
-        ,"jsx"
-        ,"cshtml"
-        ,"json"
-        ,"xml"
-        ,"yaml"
+        "csharp", "cs", "js", "ts", "py", "java", "cpp", "c", "go", "rb", "swift", "kt", "rs", "php", "html", "css",
+        "sql", "sh", "ps1", "bat", "vbs", "tsx", "jsx", "cshtml", "json", "xml", "yaml"
     ];
 
     public const string Cs = "cs";

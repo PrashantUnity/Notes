@@ -8,6 +8,7 @@ public class ChildNote
     public string ProgrammingLanguage { get; set; } = ProgrammingLanguages.Languages.First();
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
-    public string TruncatedText(int length) 
+
+    public string TruncatedText(int length)
         => Text.Length > length ? $"{Text[..length]}..." : Text;
 }
