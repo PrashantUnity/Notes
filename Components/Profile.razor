@@ -1,7 +1,7 @@
-@using Notes.Utilities
+@using Notes.Utilities 
 @using Notes.Models
-<MudDialog MaxWidth="MaxWidth.Medium" FullHeight="true">
-    <DialogContent>
+<MudDialog MaxWidth="MaxWidth.Medium" FullHeight="true"> 
+    <DialogContent> 
         <MudCard>
             <MudCardHeader>
                 <CardHeaderAvatar>
@@ -12,17 +12,17 @@
                     <MudText Typo="Typo.body2">@Helper.User?.Email</MudText>
                 </CardHeaderContent>
                 <CardHeaderActions>
-                    <MudIconButton Icon="@Icons.Material.Filled.Verified" Color="Color.Default"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Verified" Color="Color.Default" />
                 </CardHeaderActions>
             </MudCardHeader>
-            <MudCardMedia Image="@Helper.User!.Picture" Height="250"/>
+            <MudCardMedia Image="@Helper.User!.Picture" Height="250" /> 
             <MudCardContent>
                 <MudText Typo="Typo.body2">Sub : @Helper.User.Sub</MudText>
             </MudCardContent>
             <MudCardActions>
-                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" OnClick="Submit"/>
+                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" OnClick="Submit"/> 
             </MudCardActions>
         </MudCard>
-    </DialogContent>
+    </DialogContent> 
 </MudDialog>
 

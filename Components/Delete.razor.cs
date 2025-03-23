@@ -12,9 +12,10 @@ public partial class Delete
 
     [Parameter] public string ContentText { get; set; } = null!;
 
-    [Parameter] public string ButtonText { get; set; } = null!;
+    [Parameter]  public string ButtonText { get; set; } = null!;
 
-    [Parameter] public Color Color { get; set; }
+    [Parameter]
+    public Color Color { get; set; }
 
     private void Submit() => MudDialog.Close(DialogResult.Ok(true));
 

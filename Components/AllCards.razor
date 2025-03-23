@@ -2,9 +2,9 @@
 @using Notes.Models
 @using Notes.Utilities
 @inject IJSRuntime JsRuntime
-@inject ISnackbar Snackbar
+@inject ISnackbar Snackbar 
 @inject IDialogService DialogService
-
+ 
 <MudFab
     Color="Color.Primary"
     StartIcon="@Icons.Material.Filled.Add"
@@ -36,7 +36,7 @@
         @if (!Helper.ParentsNodes.Any())
         {
             <MudStack Align="Center" Justify="Justify.Center" Class="my-16">
-                <MudIcon Icon="@Icons.Material.Filled.NoteAdd" Size="Size.Large" Color="Color.Secondary" Class="mb-2"/>
+                <MudIcon Icon="@Icons.Material.Filled.NoteAdd" Size="Size.Large" Color="Color.Secondary" Class="mb-2" />
                 <MudText Color="Color.Secondary" Typo="Typo.h6">No notes found</MudText>
                 <MudText Color="Color.Secondary" Typo="Typo.body2">Click the + button to create one!</MudText>
             </MudStack>

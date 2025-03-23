@@ -22,12 +22,11 @@ builder.Services.AddOidcAuthentication(options =>
     {
         options.ProviderOptions.RedirectUri = "https://prashantunity.github.io/Notes/authentication/login-callback";
     }
-
     options.ProviderOptions.DefaultScopes.Add("email");
 });
 builder.Services.AddAuthorizationCore(options =>
 {
     options.AddPolicy("AnonymousAccess", policy => policy.RequireAssertion(context => true));
-});
-builder.Services.AddMudServices();
+}); 
+builder.Services.AddMudServices(); 
 await builder.Build().RunAsync();
