@@ -1,54 +1,141 @@
+@using System.Text.Json
 @using Notes.Models 
+@using Notes.Utilities
 @inject IJSRuntime JsRuntime
 @inject ISnackbar Snackbar
-<div id="add-note-modal" class="modal">
-    <div class="modal-content">
-        <a @onclick="CloseButtonClicked" class="close-button">&times;</a>
-        <h2>Add a New Note</h2> 
-        <input type="text"  placeholder="Title" @bind-value="@_parentNotes.Name" required /> 
-        
-        <hr/>
-        <h3>Child Notes</h3>
+<MudDialog MaxWidth="MaxWidth.Medium" FullHeight="true">
+    <TitleContent>
+        <MudText Typo="Typo.h6" Color="Color.Primary">Create New Note</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid Spacing="4">
+            <!-- Parent Note Section -->
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@_parentNotes.Name"
+                              Label="Main Note Title"
+                              Required="true"
+                              RequiredError="Title is required"
+                              Variant="Variant.Outlined"
+                              Immediate="true"
+                              Clearable="true"/>
+            </MudItem>
 
-        <div class="child-notes-container">
-            @foreach (var childNote in _childNotes)
-            {
-                <div class="child-note">
-                    <input type="text" placeholder="Title" @bind="@childNote.Name" readonly />
-                    <textarea placeholder="Your note..." @bind="@childNote.Text" readonly></textarea>
-                </div>
-            }
-        </div>
-        <hr/> 
-        <input type="text" @bind="_childNote.Name" />
-        <textarea placeholder="Your note..." @bind="_childNote.Text" ></textarea>
-        <select @bind="_childNote.NoteTypes" >
-            <option value="@NoteType.Code"> @Enum.GetName(NoteType.Code) </option>
-            <option value="@NoteType.Text"> @Enum.GetName(NoteType.Text) </option>
-            <option value="@NoteType.MarkDown"> @Enum.GetName(NoteType.MarkDown) </option>
-        </select>
-        @switch (_childNote.NoteTypes)
-        {
-            case NoteType.MarkDown:
-                _childNote.ProgrammingLanguage = ProgrammingLanguages.Md;
-                break;
-            case NoteType.Code:
-            {
-                <select @bind="_childNote.ProgrammingLanguage">
-                    @foreach (var language in ProgrammingLanguages.Languages)
+            <MudItem xs="12">
+                <MudDivider Class="my-4"/>
+            </MudItem>
+
+            <!-- Existing Child Notes -->
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle1" Class="mb-2">Child Notes</MudText>
+                <MudPaper Elevation="0" Class="pa-4" Style="max-height: 300px; overflow-y: auto;">
+                    @if (_childNotes.Any())
                     {
-                        <option value="@language"> @language </option>
+                        <MudGrid Spacing="4">
+                            @foreach (var childNote in _childNotes)
+                            {
+                                <MudItem xs="12" sm="6">
+                                    <MudCard Elevation="2" Class="mb-4">
+                                        <MudCardHeader>
+                                            <MudText Typo="Typo.body2" Class="font-weight-bold">@childNote.Name</MudText>
+                                        </MudCardHeader>
+                                        <MudCardContent>
+                                            <MudText Typo="Typo.body2" Class="text-grey text--darken-2">
+                                                @childNote.TruncatedText(50)
+                                            </MudText>
+                                            <MudChipSet Class="mt-2" T="string">
+                                                <MudChip Text="@childNote.NoteTypes.ToString()" Color="Color.Secondary" Size="Size.Small"/>
+                                                @if (childNote.NoteTypes == NoteType.Code)
+                                                {
+                                                    <MudChip Text="@childNote.ProgrammingLanguage" Color="Color.Info" Size="Size.Small"/>
+                                                }
+                                            </MudChipSet>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </MudItem>
+                            }
+                        </MudGrid>
                     }
-                </select>
-                _childNote.ProgrammingLanguage = ProgrammingLanguages.Cs;
-                break;
-            }
-            case NoteType.Text:
-            default:
-                _childNote.ProgrammingLanguage = ProgrammingLanguages.Text;
-                break;
-        }
-        <button @onclick="AddChildNote">Add Child Note</button> 
-        <button @onclick="SummitButtonClicked">Add Note</button> 
-    </div>
-</div>
+                    else
+                    {
+                        <MudText Color="Color.Secondary" Class="text-center">No child notes added yet</MudText>
+                    }
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudDivider Class="my-4"/>
+            </MudItem>
+
+            <!-- New Child Note Form -->
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle1" Class="mb-3">Add Child Note</MudText>
+                <MudGrid Spacing="4">
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="_childNote.Name"
+                                      Label="Child Note Title"
+                                      Variant="Variant.Outlined"
+                                      Immediate="true"/>
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="_childNote.NoteTypes"
+                                   Label="Note Type"
+                                   Variant="Variant.Outlined"
+                                   Immediate="true">
+                            @foreach (NoteType type in Enum.GetValues(typeof(NoteType)))
+                            {
+                                <MudSelectItem Value="type">@type.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+
+                    @if (_childNote.NoteTypes == NoteType.Code)
+                    {
+                        <MudItem xs="12" md="6">
+                            <MudSelect @bind-Value="_childNote.ProgrammingLanguage"
+                                       Label="Programming Language"
+                                       Variant="Variant.Outlined"
+                                       Immediate="true">
+                                @foreach (var language in ProgrammingLanguages.Languages)
+                                {
+                                    <MudSelectItem Value="language">@language</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                    }
+
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="_childNote.Text"
+                                      Label="Content"
+                                      Variant="Variant.Outlined"
+                                      Lines="3"
+                                      MultiLine="true"/>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Text"
+                   Color="Color.Secondary"
+                   OnClick="Cancel"
+                   Class="mr-2">
+            Cancel
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.Add"
+                   OnClick="AddChildNote"
+                   Class="mr-2">
+            Add Child
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   EndIcon="@Icons.Material.Filled.Save"
+                   OnClick="SummitButtonClicked"
+                   Disabled="@(string.IsNullOrWhiteSpace(_parentNotes.Name))">
+            Save Main Note
+        </MudButton>
+    </DialogActions>
+</MudDialog> 

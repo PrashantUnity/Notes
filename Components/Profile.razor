@@ -1,16 +1,28 @@
-@using Notes.Utilities
-<!-- Profile Modal -->
-<div id="profile-modal" class="modal">
-    <div class="modal-content">
-        <h2>User Profile</h2>
-        <p>Name: @Helper.User?.Name</p>
-        <p>Email: @Helper.User?.Email</p>
-        <img src="@Helper.User?.Picture" height="30" width="30" alt="Profile Picture" />
-        <p>Role: @Helper.User?.Azp </p>
-        <p>Created At: @Helper.User?.Jti</p>
-        <p>Updated At: @Helper.User?.Sub</p>
-        <p>Deleted At: @Helper.User?.IsEmailVerified</p> 
-        <button @onclick="CloseButtonClicked">Go To home</button>
-    </div>
-</div> 
- 
+@using Notes.Utilities 
+@using Notes.Models
+<MudDialog MaxWidth="MaxWidth.Medium" FullHeight="true"> 
+    <DialogContent> 
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Color="Color.Secondary">I</MudAvatar>
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">@Helper.User?.Name</MudText>
+                    <MudText Typo="Typo.body2">@Helper.User?.Email</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.Verified" Color="Color.Default" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardMedia Image="@Helper.User!.Picture" Height="250" /> 
+            <MudCardContent>
+                <MudText Typo="Typo.body2">Sub : @Helper.User.Sub</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" OnClick="Submit"/> 
+            </MudCardActions>
+        </MudCard>
+    </DialogContent> 
+</MudDialog>
+

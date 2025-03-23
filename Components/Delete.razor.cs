@@ -1,20 +1,23 @@
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using Notes.Models;
 
 namespace Notes.Components;
 
 public partial class Delete
 {
-    [Parameter] public EventCallback<string> DeleteNode { get; set; }
-    
-    [Parameter] public ParentNotes? ParentNote { get; set; }
-    
-    private async Task DeleteButtonClicked()
-    {
-        await DeleteNode.InvokeAsync(ParentNote?.Id);
-    }
-    private async Task CloseButtonClicked()
-    {
-        await DeleteNode.InvokeAsync(string.Empty);
-    }
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter] public ParentNotes ParentNote { get; set; } = null!;
+
+    [Parameter] public string ContentText { get; set; } = null!;
+
+    [Parameter]  public string ButtonText { get; set; } = null!;
+
+    [Parameter]
+    public Color Color { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
 }

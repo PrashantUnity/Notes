@@ -8,8 +8,6 @@ namespace Notes.Components;
 public partial class AllCards
 {
     
-    bool _isNewNoteAdding = false;
-
     private Task ActionOnCard(TakeAction<ParentNotes>? takeAction)
     {
         if (takeAction == null)
@@ -26,18 +24,20 @@ public partial class AllCards
         return Task.CompletedTask;
     }
 
-    private void NewNote()
+    private async Task NewNote()
     {
-        _isNewNoteAdding = true;
-    }
+        var option = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Small
+        };
+        var dialog = await DialogService.ShowAsync<AddNote>("AddNotes", option);  
+        var result = await dialog.Result;
 
-    private async Task AddedNewNote()
-    {
-        _isNewNoteAdding = false;
-        await LoadAllData();
-        StateHasChanged();
+        if (result is { Canceled: false })
+        { 
+            await UpdateData();
+        }
     }
-
     protected override async Task OnInitializedAsync()
     {
         if (Helper.ParentsNodes.Count == 0)
@@ -75,6 +75,8 @@ public partial class AllCards
         }
         catch (Exception ex)
         {
+            
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add($"Error loading contacts: {ex.Message}", Severity.Error);
         }
     }
@@ -90,11 +92,14 @@ public partial class AllCards
 
         if (result.Success)
         {
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add("Contact deleted successfully", Severity.Success);
             await UpdateData();
         }
         else
         {
+            
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add($"Delete failed: {result.Error}", Severity.Error);
         }
     }
@@ -116,11 +121,15 @@ public partial class AllCards
 
         if (result.Success)
         {
+            
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add("Contact Updated successfully", Severity.Success);
             await UpdateData();
         }
         else
         {
+            
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
             Snackbar.Add($"Delete failed: {result.Error}", Severity.Error);
         }
     }

@@ -1,14 +1,90 @@
-@using Notes.Models
-<!-- Edit Note Modal -->
-<div id="edit-modal" class="modal">
-    <div class="modal-content">
-        <a @onclick="CloseButtonClicked" class="close-button">&times;</a>
-        <h2>Edit Note</h2>
-        <form action="#" method="post">
-            <input type="text" placeholder="Title" required />
-            <textarea placeholder="Edit your note here..." required></textarea>
-            <button type="submit" @onclick="SummitButtonClicked">Save Changes</button>
-        </form>
-    </div>
-</div>
- 
+@using System.Text.Json
+@using Notes.Models 
+@using Notes.Utilities
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
+<MudDialog MaxWidth="MaxWidth.Medium" FullHeight="true">
+    <TitleContent>
+        <MudText Typo="Typo.h6" Color="Color.Primary">Edit Note</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid Spacing="4">
+            <!-- Parent Note Section -->
+            <MudItem xs="12">
+                <MudTextField @bind-Value="@_parentNotes.Name"
+                              Label="Main Note Title"
+                              Required="true"
+                              RequiredError="Title is required"
+                              Variant="Variant.Outlined"
+                              Immediate="true"
+                              Clearable="true"/>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudDivider Class="my-4"/>
+            </MudItem>
+
+            <!-- Existing Child Notes -->
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle1" Class="mb-2">Child Notes</MudText>
+                <MudPaper Elevation="0" Class="pa-4" Style="max-height: 300px; overflow-y: auto;">
+                    @if (_childNotes.Any())
+                    {
+                        <MudGrid Spacing="4">
+                            @foreach (var childNote in _childNotes)
+                            {
+                                <MudItem xs="12" sm="6">
+                                    <MudCard Elevation="2" Class="mb-4">
+                                        <MudCardHeader>
+                                            <MudTextField @bind-Value="childNote.Name"
+                                                          Variant="Variant.Outlined"
+                                                          Immediate="true"
+                                                          Class="font-weight-bold"/>
+                                        </MudCardHeader>
+                                        <MudCardContent>
+                                            <MudTextField @bind-Value="childNote.Text"
+                                                          Variant="Variant.Outlined"
+                                                          Lines="3"
+                                                          MultiLine="true"
+                                                          Class="text-grey text--darken-2"/>
+                                            <MudChipSet Class="mt-2" T="string">
+                                                <MudChip Text="@childNote.NoteTypes.ToString()" Color="Color.Secondary" Size="Size.Small"/>
+                                                @if (childNote.NoteTypes == NoteType.Code)
+                                                {
+                                                    <MudChip Text="@childNote.ProgrammingLanguage" Color="Color.Info" Size="Size.Small"/>
+                                                }
+                                            </MudChipSet>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <MudText Color="Color.Secondary" Class="text-center">No child notes available</MudText>
+                    }
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Text"
+                   Color="Color.Secondary"
+                   OnClick="Cancel"
+                   Class="mr-2">
+            Cancel
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   EndIcon="@Icons.Material.Filled.Save"
+                   OnClick="SaveChanges"
+                   Disabled="@(string.IsNullOrWhiteSpace(_parentNotes.Name))">
+            Save Changes
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+@code
+{
+}

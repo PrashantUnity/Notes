@@ -2,20 +2,44 @@
 @using Notes.Models
 @using Notes.Utilities
 @inject IJSRuntime JsRuntime
-@inject ISnackbar Snackbar
-
-<a @onclick="NewNote" class="add-note-button" title="Add New Note">
-    +
-</a>
-<div class="notes-container">
-    @foreach (var cards in Helper.ParentsNodes)
-    {
-        <Card TakeActionOnMe="ActionOnCard" ParentNote="cards"/>
-    }
-</div>
-
-@if (_isNewNoteAdding)
-{
-    <AddNote OnAddNote="AddedNewNote"/>
-}
+@inject ISnackbar Snackbar 
+@inject IDialogService DialogService
  
+<MudFab
+    Color="Color.Primary"
+    StartIcon="@Icons.Material.Filled.Add"
+    OnClick="NewNote"
+    Class="ma-4"
+    Style="position: fixed; bottom: 24px; right: 24px; z-index: 100;"
+    Tooltip="Create New Note"
+    Size="Size.Large"
+    Elevation="8"
+    Hover="true"/>
+
+<MudPaper
+    Width="100%"
+    Class="pa-4 mt-4"
+    Elevation="0">
+
+    <MudContainer MaxWidth="MaxWidth.Large" Class="py-4">
+        <!-- Notes Grid -->
+        <MudGrid Spacing="3" Justify="Justify.Center">
+            @foreach (var cards in Helper.ParentsNodes)
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <Card TakeActionOnMe="ActionOnCard" ParentNote="cards"/>
+                </MudItem>
+            }
+        </MudGrid>
+
+        <!-- No Notes Placeholder -->
+        @if (!Helper.ParentsNodes.Any())
+        {
+            <MudStack Align="Center" Justify="Justify.Center" Class="my-16">
+                <MudIcon Icon="@Icons.Material.Filled.NoteAdd" Size="Size.Large" Color="Color.Secondary" Class="mb-2" />
+                <MudText Color="Color.Secondary" Typo="Typo.h6">No notes found</MudText>
+                <MudText Color="Color.Secondary" Typo="Typo.body2">Click the + button to create one!</MudText>
+            </MudStack>
+        }
+    </MudContainer>
+</MudPaper> 

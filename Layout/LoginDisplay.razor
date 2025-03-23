@@ -1,18 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Notes.Models
 @using Notes.Utilities
-@inject NavigationManager Navigation
-
+@inject NavigationManager Navigation 
+@inject IDialogService DialogService
 <AuthorizeView>
-    <Authorized>
-        Hello, @context.User.Identity?.Name!
+    <Authorized> 
         @* <a @onclick="BeginLogOut">Log out</a> *@
-        <a @onclick="ShowProfile">Profile</a> 
+        <MudText Typo="Typo.h4">Hello, @context.User.Identity?.Name !</MudText>
+        <MudAvatar>
+            <MudImage Src="@Helper.User!.Picture" @onclick="ShowProfile"></MudImage>
+        </MudAvatar>
     </Authorized>
     <NotAuthorized>
         <a href="authentication/login">Log in</a>
     </NotAuthorized>
-</AuthorizeView>
-@if(_showProfile)
+</AuthorizeView> 
+@code
 {
-    <Profile  HideProfile="HideMe"/>
-} 
+
+}

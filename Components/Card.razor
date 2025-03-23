@@ -1,35 +1,22 @@
 @using Notes.Models
 @using Notes.Utilities
 @inject IJSRuntime JsRuntime
-
-<div class="note-card" style="border-left: 5px solid @ParentNote.Color;">
-    <input type="radio" name="color1" id="color1-default" class="color-radio" checked>
-    <input type="radio" name="color1" id="color1-yellow" class="color-radio">
-    <input type="radio" name="color1" id="color1-blue" class="color-radio">
-    <input type="radio" name="color1" id="color1-green" class="color-radio">
-    <h2>@ParentNote.Name</h2>
-    <p>Created: @ParentNote.CreatedAt.ToShortDateString()</p>
-
-    <div class="child-notes">
-        @foreach (var child in ParentNote.CodeNotes)
-        {
-            <div class="child-note">
-                <h3>@child.Name (@child.ProgrammingLanguage)</h3>
-                <p>@child.Text</p>
-                <small>Last updated: @child.UpdatedAt.ToShortDateString()</small>
-            </div>
-        }
-    </div>
-
-    <button @onclick="EditPrompt">Edit</button>
-    <button @onclick="DeletePrompt">Delete</button>
-</div>
-
-@if (_isEditing)
-{
-    <EditCard EditNode="EditedNode" ParentNote="ParentNote" />
-}
-@if (_isDeleting)
-{
-    <Delete  DeleteNode="DeletedNode" ParentNote="ParentNote"/>
-} 
+@inject IDialogService DialogService
+<MudPaper Elevation="3" Class="theme-paper" style="height:90%;overflow: auto;" >
+    <MudCard> 
+        <MudCardContent>
+            <MudText Typo="Typo.h5" GutterBottom="true">@ParentNote.Name</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                Created: @ParentNote.CreatedAt.ToShortDateString()
+            </MudText>
+        </MudCardContent>
+        <MudCardActions Class="justify-end">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="EditPrompt">
+                Edit
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="DeletePrompt">
+                Delete
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudPaper>  

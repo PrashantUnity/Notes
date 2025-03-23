@@ -8,8 +8,9 @@ namespace Notes.Components;
 
 public partial class AddNote
 {
-    [Parameter]
-    public EventCallback OnAddNote { get; set; } 
+     
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;  
     private ParentNotes _parentNotes = new();
     ChildNote _childNote = new();
     private List<ChildNote> _childNotes = [];
@@ -44,12 +45,10 @@ public partial class AddNote
         }
         else
         {
-            Snackbar.Add("Data saved successfully!",  Severity.Error);
-        } 
-        await OnAddNote.InvokeAsync();
+            Snackbar.Add("Data Failed To save !",  Severity.Error);
+        }
+
+        MudDialog.Close(DialogResult.Ok(true));
     }
-    private async Task CloseButtonClicked()
-    { 
-        await OnAddNote.InvokeAsync();
-    }  
+    private void Cancel() => MudDialog.Cancel();  
 }

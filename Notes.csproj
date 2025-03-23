@@ -15,5 +15,9 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\app.css" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include=".github\workflows\dotnet.yaml" />
     </ItemGroup> 
 </Project>

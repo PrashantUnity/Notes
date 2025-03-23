@@ -1,11 +1,10 @@
 @using Notes.Models
-<!-- Delete Confirmation Modal -->
-<div id="delete-modal" class="modal">
-    <div class="modal-content">
-        <a @onclick="CloseButtonClicked" class="close-button">&times;</a>
-        <h2>Delete Note</h2>
-        <p>Are you sure you want to delete this note?</p>
-        <button style="background-color:#d93025;" @onclick="DeleteButtonClicked">Delete</button>
-    </div>
-</div>
- 
+<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog> 

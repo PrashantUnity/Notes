@@ -4,18 +4,22 @@
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
+<MudStack>
+    <!-- App Bar -->
+    <MudAppBar Color="Color.Dark" Elevation="4" Fixed="true" Class="px-4">
+        <MudAvatar Color="Color.Warning" Variant="Variant.Filled">
+            <MudIcon Color="Color.Dark" Icon="@Icons.Custom.Uncategorized.Radioactive" Size="Size.Large"/>
+        </MudAvatar>
 
-<!-- Navbar with Login and Profile --> 
-<MudAppBar Color="Color.Primary" Fixed="false">
-    <MudAvatar Color="Color.Warning" Variant="Variant.Filled">
-        <MudIcon Color="Color.Dark" Icon="@Icons.Custom.Uncategorized.Radioactive" Size="Size.Large" />
-    </MudAvatar>
-    <MudSpacer />
-    <LoginDisplay/>
-</MudAppBar>
+        <MudText Typo="Typo.h5" Class="ml-2">My App</MudText>
 
-<!-- Floating Add Note Button -->  
-<div class="container">
-    @Body
-</div>
- 
+        <MudSpacer/>
+
+        <LoginDisplay/>
+    </MudAppBar>
+
+    <!-- Main Content -->
+    <MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+        @Body
+    </MudContainer>
+</MudStack>
