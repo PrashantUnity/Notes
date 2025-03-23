@@ -13,7 +13,15 @@ builder.Services.AddOidcAuthentication(options =>
 {
     options.ProviderOptions.Authority = "https://accounts.google.com";
     options.ProviderOptions.ClientId = "315199970520-h1el19srk4vgtnuu0qmv3avsgqul6ccs.apps.googleusercontent.com";
-    options.ProviderOptions.RedirectUri = "https://localhost:7156/authentication/login-callback";
+
+    if (builder.HostEnvironment.IsDevelopment())
+    {
+        options.ProviderOptions.RedirectUri = "https://localhost:7156/authentication/login-callback";
+    }
+    else
+    {
+        options.ProviderOptions.RedirectUri = "https://prashantunity.github.io/Notes/authentication/login-callback";
+    }
     options.ProviderOptions.DefaultScopes.Add("email");
 });
 builder.Services.AddAuthorizationCore(options =>
