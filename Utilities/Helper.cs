@@ -11,7 +11,6 @@ public class Helper
     public static User? User { get; set; }
     [Inject] static IJSRuntime JSRuntime { get; set; } = null!;
     public static List<ParentNotes> ParentsNodes { get; set; } = [];
-
     public static DateTime ParseFirestoreTimestamp(JsonElement timestampElement)
     {
         try

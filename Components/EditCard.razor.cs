@@ -8,8 +8,11 @@ namespace Notes.Components;
 
 public partial class EditCard
 {
-    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = null!;
-    [Parameter] public ParentNotes ExistingNote { get; set; } = null!;
+    
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; } = null!;  
+    [Parameter]
+    public ParentNotes ExistingNote { get; set; } = null!;
 
     private ParentNotes _parentNotes = new();
     private List<ChildNote> _childNotes = [];
@@ -27,7 +30,7 @@ public partial class EditCard
             StateHasChanged();
             return;
         }
-
+ 
         _parentNotes.CodeNotes = _childNotes;
 
         var formData = new
@@ -51,5 +54,5 @@ public partial class EditCard
         MudDialog.Close(DialogResult.Ok(true));
     }
 
-    private void Cancel() => MudDialog.Cancel();
+    private void Cancel() => MudDialog.Cancel();  
 }

@@ -6,15 +6,15 @@ function initializeFirebase(config) {
     return true;
 }
 
-async function saveContact(email, formData) {
+async function saveContact(email,formData) {
     try {
         await db.collection(email).add({
             ...formData,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
-        return {success: true};
+        return { success: true };
     } catch (error) {
-        return {success: false, error: error.message};
+        return { success: false, error: error.message };
     }
 }
 
@@ -43,21 +43,20 @@ async function getContacts(email) {
     }
 }
 
-async function deleteContact(email, contactId) {
+async function deleteContact(email,contactId) {
     try {
         await db.collection(email).doc(contactId).delete();
-        return {success: true};
+        return { success: true };
     } catch (error) {
-        return {success: false, error: error.message};
+        return { success: false, error: error.message };
     }
 }
-
-async function updateContact(email, contactId, updatedData) {
+async function updateContact(email,contactId, updatedData) {
     try {
         await db.collection(email).doc(contactId).update(updatedData);
-        return {success: true};
+        return { success: true };
     } catch (error) {
-        return {success: false, error: error.message};
+        return { success: false, error: error.message };
     }
 }
 

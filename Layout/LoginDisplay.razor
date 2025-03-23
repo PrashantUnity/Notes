@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Notes.Models
 @using Notes.Utilities
-@inject NavigationManager Navigation
+@inject NavigationManager Navigation 
 @inject IDialogService DialogService
 <AuthorizeView>
-    <Authorized>
+    <Authorized> 
         @* <a @onclick="BeginLogOut">Log out</a> *@
         <MudText Typo="Typo.h4">Hello, @context.User.Identity?.Name !</MudText>
         <MudAvatar>
@@ -14,8 +14,7 @@
     <NotAuthorized>
         <MudLink href="authentication/login" Color="Color.Secondary">Log in</MudLink>
     </NotAuthorized>
-</AuthorizeView>
-
+</AuthorizeView> 
 @code
 {
 

@@ -10,22 +10,21 @@ public partial class LoginDisplay
     public void BeginLogOut()
     {
         Helper.User = null;
-        Navigation.NavigateToLogout("authentication/logout", "/");
-    }
-
+        Navigation.NavigateToLogout("authentication/logout","/");
+    } 
     private async Task ShowProfile()
     {
         var parameters = new DialogParameters<Profile> { { x => x.ProfileData, Helper.User } };
         var option = new DialogOptions
         {
-            NoHeader = true
+            NoHeader =  true
         };
-        var dialog = await DialogService.ShowAsync<Profile>("Profile", parameters, option);
+        var dialog = await DialogService.ShowAsync<Profile>("Profile", parameters,option);
         var result = await dialog.Result;
-
-        if (result is { Canceled: false })
-        {
+         
+        if( result is { Canceled: false })
+        { 
             // late Maybe we can do something here
-        }
+        } 
     }
 }
