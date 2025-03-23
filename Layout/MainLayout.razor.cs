@@ -17,6 +17,6 @@ public partial class MainLayout
             appId = "1:1067545872761:web:01f006ce0d16921c4007a8",
             measurementId = "G-NPR8WQKRD3"
         };
-        await JsRuntime.InvokeVoidAsync("initializeFirebase", config); 
+        await JsRuntime.InvokeVoidAsync("initializeFirebase", config);
     }
 }

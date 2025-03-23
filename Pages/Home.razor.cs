@@ -18,7 +18,7 @@ public partial class Home
         Helper.User ??= new User();
 
         foreach (var claim in _principal.Claims)
-        { 
+        {
             switch (claim.Type)
             {
                 case "email":
